@@ -12,42 +12,62 @@ struct GeneratedVideoPlayerView: View {
         case cinema
     }
 
-    @State private var player: AVPlayer?
+    @State private var cardPlayer: AVPlayer?
+    @State private var playbackController = VideoPlaybackController()
 
     private var ratio: CGFloat { aspectRatio.displayRatio }
 
     var body: some View {
         Group {
             if style == .card {
-                cardPlayer
+                cardPlayerView
             } else {
-                cinemaPlayer
+                cinemaPlayerView
             }
         }
         .background(Color.black)
     }
 
-    private var cardPlayer: some View {
+    private var cardPlayerView: some View {
         playerSurface
             .aspectRatio(ratio, contentMode: .fit)
             .clipShape(
                 RoundedRectangle(cornerRadius: AppTheme.cornerRadiusLarge, style: .continuous)
             )
-            .onAppear(perform: startPlayback)
-            .onDisappear(perform: stopPlayback)
+            .onAppear(perform: startCardPlayback)
+            .onDisappear(perform: stopCardPlayback)
     }
 
-    private var cinemaPlayer: some View {
+    private var cinemaPlayerView: some View {
         Color.black
             .aspectRatio(ratio, contentMode: .fit)
             .overlay {
-                CinemaPlayerView(url: url)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                if let player = playbackController.player {
+                    CinemaPlayerLayerView(player: player)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    ProgressView()
+                        .tint(AppColors.accentPurple)
+                }
+            }
+            .overlay(alignment: .bottom) {
+                VideoPlayerControlsBar(controller: playbackController)
             }
             .overlay(alignment: .bottomTrailing) {
                 if showWatermark {
                     watermarkBadge
+                        .padding(.bottom, 72)
                 }
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                playbackController.togglePlayback()
+            }
+            .onAppear {
+                playbackController.load(url: url)
+            }
+            .onDisappear {
+                playbackController.teardown()
             }
     }
 
@@ -55,8 +75,8 @@ struct GeneratedVideoPlayerView: View {
         ZStack {
             Color.black
 
-            if let player {
-                VideoPlayer(player: player)
+            if let cardPlayer {
+                VideoPlayer(player: cardPlayer)
                     .background(Color.black)
             } else {
                 ProgressView()
@@ -82,14 +102,14 @@ struct GeneratedVideoPlayerView: View {
             .allowsHitTesting(false)
     }
 
-    private func startPlayback() {
+    private func startCardPlayback() {
         let newPlayer = AVPlayer(url: url)
-        player = newPlayer
+        cardPlayer = newPlayer
         newPlayer.play()
     }
 
-    private func stopPlayback() {
-        player?.pause()
-        player = nil
+    private func stopCardPlayback() {
+        cardPlayer?.pause()
+        cardPlayer = nil
     }
 }

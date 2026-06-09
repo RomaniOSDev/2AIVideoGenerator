@@ -10,4 +10,7 @@ enum WaveSpeedConfiguration {
     static let downloadRequestTimeout: TimeInterval = 1200
     static let downloadResourceTimeout: TimeInterval = 1800
     static let downloadMaxRetries = 3
+
+    static let defaultVideoResolution = "480p"
+    static let prunaVideoResolution = "720p"
 }

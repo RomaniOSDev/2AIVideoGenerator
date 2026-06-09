@@ -1,34 +1,42 @@
-import AVKit
+import AVFoundation
 import SwiftUI
 
-struct CinemaPlayerView: UIViewControllerRepresentable {
-    let url: URL
+struct CinemaPlayerLayerView: UIViewRepresentable {
+    let player: AVPlayer
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
+    func makeUIView(context: Context) -> PlayerContainerView {
+        let view = PlayerContainerView()
+        view.configure(player: player)
+        return view
     }
 
-    func makeUIViewController(context: Context) -> AVPlayerViewController {
-        let controller = AVPlayerViewController()
-        let player = AVPlayer(url: url)
-        context.coordinator.player = player
-        controller.player = player
-        controller.showsPlaybackControls = false
-        controller.videoGravity = .resizeAspect
-        controller.view.backgroundColor = .black
-        player.play()
-        return controller
+    func updateUIView(_ uiView: PlayerContainerView, context: Context) {
+        uiView.configure(player: player)
+    }
+}
+
+final class PlayerContainerView: UIView {
+    private let playerLayer = AVPlayerLayer()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .black
+        playerLayer.videoGravity = .resizeAspect
+        layer.addSublayer(playerLayer)
     }
 
-    func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {}
-
-    static func dismantleUIViewController(_ uiViewController: AVPlayerViewController, coordinator: Coordinator) {
-        coordinator.player?.pause()
-        coordinator.player = nil
-        uiViewController.player = nil
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        nil
     }
 
-    final class Coordinator {
-        var player: AVPlayer?
+    func configure(player: AVPlayer) {
+        playerLayer.player = player
+        setNeedsLayout()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerLayer.frame = bounds
     }
 }

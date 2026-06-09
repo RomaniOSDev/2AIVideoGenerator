@@ -55,7 +55,9 @@ final class WaveSpeedService: WaveSpeedServiceProtocol, @unchecked Sendable {
             prompt: request.prompt,
             duration: request.duration,
             aspectRatio: request.aspectRatio,
-            resolution: request.model == .veo31Fast ? "1080p" : "720p",
+            resolution: request.model == .veo31Fast
+                ? WaveSpeedConfiguration.defaultVideoResolution
+                : WaveSpeedConfiguration.prunaVideoResolution,
             saveAudio: request.model == .veo31Fast ? nil : true,
             sound: request.model == .veo31Fast ? false : nil,
             qualityMode: request.model == .veo31Fast ? "std" : nil

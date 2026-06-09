@@ -135,7 +135,7 @@ enum VideoModelRegistry {
                 prompt: params.prompt,
                 aspectRatio: params.aspectRatioValue ?? "16:9",
                 duration: params.duration ?? 5,
-                resolution: params.resolution ?? "720p",
+                resolution: params.resolution ?? WaveSpeedConfiguration.prunaVideoResolution,
                 saveAudio: params.saveAudio ?? true,
                 seed: params.seed ?? -1
             )
@@ -159,7 +159,7 @@ enum VideoModelRegistry {
                     : prompt,
                 image: imageURL,
                 duration: params.duration ?? 5,
-                resolution: params.resolution ?? "720p",
+                resolution: params.resolution ?? WaveSpeedConfiguration.prunaVideoResolution,
                 seed: params.seed ?? -1,
                 saveAudio: params.saveAudio ?? true
             )
@@ -179,7 +179,7 @@ enum VideoModelRegistry {
                     : prompt,
                 duration: params.duration ?? 5,
                 aspectRatio: params.aspectRatioValue ?? "16:9",
-                resolution: params.resolution ?? "1080p",
+                resolution: params.resolution ?? WaveSpeedConfiguration.defaultVideoResolution,
                 sound: params.sound ?? false,
                 mode: params.qualityMode ?? "std"
             )
@@ -200,7 +200,7 @@ enum VideoModelRegistry {
                 images: imageURLs.isEmpty ? nil : Array(imageURLs.prefix(3)),
                 aspectRatio: params.aspectRatioValue ?? "16:9",
                 duration: params.duration ?? 5,
-                resolution: params.resolution ?? "1080p",
+                resolution: params.resolution ?? WaveSpeedConfiguration.defaultVideoResolution,
                 sound: params.sound ?? false,
                 mode: params.qualityMode ?? "std"
             )
