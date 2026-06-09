@@ -1,0 +1,3 @@
+"NSCameraUsageDescription" = "The app needs camera access to take photos for AI video generation.";
+"NSPhotoLibraryAddUsageDescription" = "The app needs permission to save generated videos to your photo library.";
+"NSPhotoLibraryUsageDescription" = "The app needs photo library access to select images for AI video generation.";

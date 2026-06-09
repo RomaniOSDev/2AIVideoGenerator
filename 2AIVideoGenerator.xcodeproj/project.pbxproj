@@ -3,19 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXFileReference section */
 		301FDA322FD81C8B0019443E /* 2AIVideoGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2AIVideoGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C48500C0C1D1264D982425A /* Pods_2AIVideoGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_2AIVideoGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D30E3A37F9DABF122BA9D2C4 /* Pods-2AIVideoGenerator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-2AIVideoGenerator.release.xcconfig"; path = "Target Support Files/Pods-2AIVideoGenerator/Pods-2AIVideoGenerator.release.xcconfig"; sourceTree = "<group>"; };
+		D7264AB10EDD05E7CD795770 /* Pods-2AIVideoGenerator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-2AIVideoGenerator.debug.xcconfig"; path = "Target Support Files/Pods-2AIVideoGenerator/Pods-2AIVideoGenerator.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		301FDA342FD81C8B0019443E /* 2AIVideoGenerator */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = 2AIVideoGenerator;
-			sourceTree = "<group>";
-		};
+		301FDA592FD81D290019443E /* 2AIVideoGenerator */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = 2AIVideoGenerator; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,8 +31,10 @@
 		301FDA292FD81C8B0019443E = {
 			isa = PBXGroup;
 			children = (
-				301FDA342FD81C8B0019443E /* 2AIVideoGenerator */,
+				301FDA592FD81D290019443E /* 2AIVideoGenerator */,
 				301FDA332FD81C8B0019443E /* Products */,
+				A5D1B035FFE9ADB28CD844DD /* Pods */,
+				DAF4319AFC7E805E3FC9585C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -45,6 +46,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A5D1B035FFE9ADB28CD844DD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D7264AB10EDD05E7CD795770 /* Pods-2AIVideoGenerator.debug.xcconfig */,
+				D30E3A37F9DABF122BA9D2C4 /* Pods-2AIVideoGenerator.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		DAF4319AFC7E805E3FC9585C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7C48500C0C1D1264D982425A /* Pods_2AIVideoGenerator.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -52,6 +70,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 301FDA3D2FD81C8D0019443E /* Build configuration list for PBXNativeTarget "2AIVideoGenerator" */;
 			buildPhases = (
+				0244C9E128BD09E70D122A61 /* [CP] Check Pods Manifest.lock */,
 				301FDA2E2FD81C8B0019443E /* Sources */,
 				301FDA2F2FD81C8B0019443E /* Frameworks */,
 				301FDA302FD81C8B0019443E /* Resources */,
@@ -61,11 +80,9 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				301FDA342FD81C8B0019443E /* 2AIVideoGenerator */,
+				301FDA592FD81D290019443E /* 2AIVideoGenerator */,
 			);
 			name = 2AIVideoGenerator;
-			packageProductDependencies = (
-			);
 			productName = 2AIVideoGenerator;
 			productReference = 301FDA322FD81C8B0019443E /* 2AIVideoGenerator.app */;
 			productType = "com.apple.product-type.application";
@@ -86,15 +103,15 @@
 				};
 			};
 			buildConfigurationList = 301FDA2D2FD81C8B0019443E /* Build configuration list for PBXProject "2AIVideoGenerator" */;
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 301FDA292FD81C8B0019443E;
-			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 301FDA332FD81C8B0019443E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -113,6 +130,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0244C9E128BD09E70D122A61 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-2AIVideoGenerator-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		301FDA2E2FD81C8B0019443E /* Sources */ = {
@@ -246,6 +288,7 @@
 		};
 		301FDA3E2FD81C8D0019443E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D7264AB10EDD05E7CD795770 /* Pods-2AIVideoGenerator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -253,11 +296,15 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The app needs camera access to take photos for AI video generation.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "The app needs permission to save generated videos to your photo library.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "The app needs photo library access to select images for AI video generation.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -266,17 +313,22 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "home.-AIVideoGenerator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		301FDA3F2FD81C8D0019443E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D30E3A37F9DABF122BA9D2C4 /* Pods-2AIVideoGenerator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -284,11 +336,15 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The app needs camera access to take photos for AI video generation.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "The app needs permission to save generated videos to your photo library.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "The app needs photo library access to select images for AI video generation.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -297,12 +353,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "home.-AIVideoGenerator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -1,0 +1,6 @@
+framework module Pods_2AIVideoGenerator {
+  umbrella header "Pods-2AIVideoGenerator-umbrella.h"
+
+  export *
+  module * { export * }
+}
