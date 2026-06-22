@@ -46,6 +46,15 @@ enum L10n {
     static let createCameraUnavailable = String(localized: "create.cameraUnavailable")
     static let createCameraUnavailableMessage = String(localized: "create.cameraUnavailableMessage")
 
+    // MARK: - AI consent
+    static let aiConsentTitle = String(localized: "ai.consentTitle")
+    static let aiConsentSubtitle = String(localized: "ai.consentSubtitle")
+    static let aiConsentMessage = String(localized: "ai.consentMessage")
+    static let aiConsentPointPrompt = String(localized: "ai.consentPointPrompt")
+    static let aiConsentPointPhoto = String(localized: "ai.consentPointPhoto")
+    static let aiConsentPointPurpose = String(localized: "ai.consentPointPurpose")
+    static let aiConsentAllow = String(localized: "ai.consentAllow")
+
     // MARK: - Models
     static let modelRunwayGen4 = String(localized: "model.runwayGen4")
     static let modelRunwayGen4Desc = String(localized: "model.runwayGen4Desc")
@@ -108,10 +117,19 @@ enum L10n {
     static let paywallFreeTrialBadge = String(localized: "paywall.freeTrialBadge")
     static let paywallProSubscription = String(localized: "paywall.proSubscription")
     static let paywallStartTrial = String(localized: "paywall.startTrial")
+    static let paywallSubscribe = String(localized: "paywall.subscribe")
     static let paywallTrialThenPrice = String(localized: "paywall.trialThenPrice")
     static func paywallTrialThenPriceDynamic(_ price: String, _ period: String) -> String {
         String(format: String(localized: "paywall.trialThenPriceDynamic"), price, period)
     }
+    static func paywallPriceDynamic(_ price: String, _ period: String) -> String {
+        String(format: String(localized: "paywall.priceDynamic"), price, period)
+    }
+    static let paywallPriceUnavailable = String(localized: "paywall.priceUnavailable")
+    static let paywallLoadingProducts = String(localized: "paywall.loadingProducts")
+    static let paywallProductsLoadFailed = String(localized: "paywall.productsLoadFailed")
+    static let paywallReloadProducts = String(localized: "paywall.reloadProducts")
+    static let paywallAutoRenewDisclaimer = String(localized: "paywall.autoRenewDisclaimer")
     static let paywallFeatureModels = String(localized: "paywall.featureModels")
     static let paywallFeatureQuality = String(localized: "paywall.featureQuality")
     static let paywallFeatureNoWatermark = String(localized: "paywall.featureNoWatermark")

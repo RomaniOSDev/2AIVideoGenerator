@@ -56,8 +56,7 @@ struct OnboardingView: View {
             Image(slide.imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(maxWidth: .infinity)
-                .frame(height: 320)
+                
                 .clipShape(RoundedRectangle(cornerRadius: AppTheme.cornerRadiusLarge, style: .continuous))
                 .padding(.horizontal, AppTheme.horizontalPadding)
 

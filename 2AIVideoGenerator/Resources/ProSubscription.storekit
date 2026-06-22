@@ -110,12 +110,12 @@
           },
           "localizations" : [
             {
-              "description" : "Unlimited AI video generation with Runway and Google Veo",
+              "description" : "AI video generation with Pruna P-Video and Skyreels v4 via WaveSpeed",
               "displayName" : "Pro Weekly",
               "locale" : "en_US"
             },
             {
-              "description" : "Безлимитная генерация видео с Runway и Google Veo",
+              "description" : "Генерация видео с Pruna P-Video и Skyreels v4 через WaveSpeed",
               "displayName" : "Pro Weekly",
               "locale" : "ru"
             }

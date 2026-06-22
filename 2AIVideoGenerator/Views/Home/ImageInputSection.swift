@@ -7,6 +7,13 @@ struct ImageInputSection: View {
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var showCamera = false
     @State private var showCameraUnavailableAlert = false
+    @State private var showAIConsentSheet = false
+    @State private var pendingPhotoAction: PhotoInputAction?
+
+    private enum PhotoInputAction {
+        case photoLibrary
+        case camera
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -47,6 +54,22 @@ struct ImageInputSection: View {
         } message: {
             Text(L10n.createCameraUnavailableMessage)
         }
+        .sheet(isPresented: $showAIConsentSheet) {
+            AIProcessingConsentSheet(
+                onAllow: {
+                    AIProcessingConsentService.shared.grantConsent()
+                    showAIConsentSheet = false
+                    if let pendingPhotoAction {
+                        performPhotoAction(pendingPhotoAction)
+                    }
+                    pendingPhotoAction = nil
+                },
+                onCancel: {
+                    showAIConsentSheet = false
+                    pendingPhotoAction = nil
+                }
+            )
+        }
     }
 
     private var emptyImagePicker: some View {
@@ -66,7 +89,7 @@ struct ImageInputSection: View {
                     icon: "photo.fill",
                     isPrimary: false
                 ) {
-                    viewModel.showPhotoLibrary = true
+                    requestPhotoAccess(.photoLibrary)
                 }
 
                 pickerButton(
@@ -74,7 +97,7 @@ struct ImageInputSection: View {
                     icon: "camera.fill",
                     isPrimary: true
                 ) {
-                    openCamera()
+                    requestPhotoAccess(.camera)
                 }
             }
         }
@@ -105,7 +128,7 @@ struct ImageInputSection: View {
                     icon: "photo.fill",
                     isPrimary: false
                 ) {
-                    viewModel.showPhotoLibrary = true
+                    requestPhotoAccess(.photoLibrary)
                 }
 
                 pickerButton(
@@ -113,7 +136,7 @@ struct ImageInputSection: View {
                     icon: "camera.fill",
                     isPrimary: false
                 ) {
-                    openCamera()
+                    requestPhotoAccess(.camera)
                 }
 
                 Button {
@@ -158,6 +181,25 @@ struct ImageInputSection: View {
             .clipShape(Capsule())
         }
         .buttonStyle(.plain)
+    }
+
+    private func requestPhotoAccess(_ action: PhotoInputAction) {
+        if AIProcessingConsentService.shared.hasUserConsent {
+            performPhotoAction(action)
+            return
+        }
+
+        pendingPhotoAction = action
+        showAIConsentSheet = true
+    }
+
+    private func performPhotoAction(_ action: PhotoInputAction) {
+        switch action {
+        case .photoLibrary:
+            viewModel.showPhotoLibrary = true
+        case .camera:
+            openCamera()
+        }
     }
 
     private func openCamera() {

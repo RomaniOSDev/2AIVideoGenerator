@@ -6,6 +6,8 @@ struct SubscriptionView: View {
     @State private var alertMessage: String?
     @State private var showAlert = false
 
+    @Environment(\.openURL) private var openURL
+
     private var subscriptionService: SubscriptionService {
         appState.subscriptionService
     }
@@ -36,7 +38,7 @@ struct SubscriptionView: View {
                         .padding(.bottom, 16)
                 }
 
-                subscriptionCard
+                productSection
                     .padding(.horizontal, AppTheme.horizontalPadding)
 
                 bottomSection
@@ -56,6 +58,61 @@ struct SubscriptionView: View {
         } message: {
             Text(alertMessage ?? "")
         }
+    }
+
+    @ViewBuilder
+    private var productSection: some View {
+        if subscriptionService.isLoading && subscriptionService.product == nil {
+            VStack(spacing: 12) {
+                ProgressView()
+                    .tint(AppColors.accentPurple)
+                Text(L10n.paywallLoadingProducts)
+                    .font(.subheadline)
+                    .foregroundStyle(AppColors.textSecondary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 40)
+        } else if let error = subscriptionService.productsLoadError, subscriptionService.product == nil {
+            productLoadErrorView(message: error)
+        } else if subscriptionService.product != nil {
+            subscriptionCard
+        }
+    }
+
+    private func productLoadErrorView(message: String) -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: "exclamationmark.triangle")
+                .font(.title2)
+                .foregroundStyle(AppColors.warning)
+
+            Text(L10n.paywallProductsLoadFailed)
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(AppColors.textPrimary)
+                .multilineTextAlignment(.center)
+
+            Text(message)
+                .font(.caption)
+                .foregroundStyle(AppColors.textSecondary)
+                .multilineTextAlignment(.center)
+
+            Button {
+                Task { await subscriptionService.loadProducts() }
+            } label: {
+                Text(L10n.paywallReloadProducts)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(AppColors.gradientPrimary)
+                    .clipShape(Capsule())
+            }
+            .buttonStyle(.plain)
+            .disabled(subscriptionService.isLoading)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(24)
+        .background(AppColors.surface.opacity(0.85))
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.cornerRadiusLarge, style: .continuous))
     }
 
     private var statusBanner: some View {
@@ -108,14 +165,14 @@ struct SubscriptionView: View {
                         .foregroundStyle(AppColors.textPrimary)
 
                     VStack(alignment: .leading, spacing: 12) {
-                        ForEach(viewModel.plan.features, id: \.self) { feature in
+                        ForEach(viewModel.features(from: subscriptionService), id: \.self) { feature in
                             PaywallFeatureRow(text: feature)
                         }
                     }
                     .padding(.top, 4)
                 }
 
-                if !appState.hasPremiumAccess {
+                if !appState.hasPremiumAccess, subscriptionService.hasIntroductoryOffer {
                     Text(L10n.paywallFreeTrialBadge)
                         .font(.caption2.weight(.bold))
                         .tracking(0.5)
@@ -162,7 +219,7 @@ struct SubscriptionView: View {
                             ProgressView()
                                 .tint(.white)
                         } else {
-                            Text(L10n.paywallStartTrial)
+                            Text(viewModel.purchaseButtonTitle(from: subscriptionService))
                                 .font(.headline.weight(.bold))
                         }
                     }
@@ -179,11 +236,23 @@ struct SubscriptionView: View {
                     .clipShape(Capsule())
                 }
                 .buttonStyle(.plain)
-                .disabled(subscriptionService.isPurchasing || subscriptionService.isLoading)
+                .disabled(
+                    subscriptionService.isPurchasing
+                        || subscriptionService.isLoading
+                        || subscriptionService.product == nil
+                )
+                .opacity(subscriptionService.product == nil ? 0.5 : 1)
             }
 
+            Text(L10n.paywallAutoRenewDisclaimer)
+                .font(.caption2)
+                .foregroundStyle(AppColors.textSecondary)
+                .multilineTextAlignment(.center)
+
             HStack(spacing: 6) {
-                footerLink(L10n.paywallFooterTerms) {}
+                footerLink(L10n.paywallFooterTerms) {
+                    openURL(AppLegalLinks.termsOfUse)
+                }
                 Text("•")
                     .foregroundStyle(AppColors.textSecondary.opacity(0.5))
                 footerLink(L10n.paywallFooterRestore) {
@@ -191,7 +260,9 @@ struct SubscriptionView: View {
                 }
                 Text("•")
                     .foregroundStyle(AppColors.textSecondary.opacity(0.5))
-                footerLink(L10n.paywallFooterPrivacy) {}
+                footerLink(L10n.paywallFooterPrivacy) {
+                    openURL(AppLegalLinks.privacyPolicy)
+                }
             }
         }
     }

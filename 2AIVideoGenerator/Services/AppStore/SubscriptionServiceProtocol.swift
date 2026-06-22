@@ -7,6 +7,8 @@ protocol SubscriptionServiceProtocol: AnyObject {
     var product: Product? { get }
     var isLoading: Bool { get }
     var isPurchasing: Bool { get }
+    var productsLoadError: String? { get }
+    var hasIntroductoryOffer: Bool { get }
     var displayPrice: String? { get }
     var subscriptionPeriodLabel: String? { get }
 

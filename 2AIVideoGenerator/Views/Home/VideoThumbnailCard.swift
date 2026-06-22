@@ -30,3 +30,17 @@ struct VideoThumbnailCard: View {
         .frame(width: size, height: size)
     }
 }
+
+#Preview {
+    ZStack {
+        Color.black.ignoresSafeArea()
+
+        HStack(spacing: 16) {
+            VideoThumbnailCard(video: GeneratedVideo.previewPortrait)
+            VideoThumbnailCard(video: GeneratedVideo.previewLandscape)
+            VideoThumbnailCard(video: GeneratedVideo.previewSquare, size: 100)
+        }
+        .padding()
+    }
+    .preferredColorScheme(.dark)
+}

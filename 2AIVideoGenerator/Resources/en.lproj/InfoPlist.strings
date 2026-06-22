@@ -1,3 +1,4 @@
-"NSCameraUsageDescription" = "The app needs camera access to take photos for AI video generation.";
+"NSCameraUsageDescription" = "The app needs camera access to take photos for AI video generation. Selected photos may be uploaded to WaveSpeed for processing.";
 "NSPhotoLibraryAddUsageDescription" = "The app needs permission to save generated videos to your photo library.";
-"NSPhotoLibraryUsageDescription" = "The app needs photo library access to select images for AI video generation.";
+"NSPhotoLibraryUsageDescription" = "The app needs photo library access to select images for AI video generation. Selected photos may be uploaded to WaveSpeed for processing.";
+"NSUserTrackingUsageDescription" = "This identifier is used to measure app performance and marketing effectiveness. You can change this permission anytime in Settings.";

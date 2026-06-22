@@ -8,6 +8,7 @@ final class SubscriptionService: SubscriptionServiceProtocol {
     private(set) var product: Product?
     private(set) var isLoading = false
     private(set) var isPurchasing = false
+    private(set) var productsLoadError: String?
 
     private nonisolated(unsafe) var transactionListener: Task<Void, Never>?
 
@@ -23,6 +24,10 @@ final class SubscriptionService: SubscriptionServiceProtocol {
         case .year: return L10n.subscriptionPerYear
         default: return nil
         }
+    }
+
+    var hasIntroductoryOffer: Bool {
+        product?.subscription?.introductoryOffer != nil
     }
 
     var isSubscribed: Bool {
@@ -55,13 +60,20 @@ final class SubscriptionService: SubscriptionServiceProtocol {
 
     func loadProducts() async {
         isLoading = true
+        productsLoadError = nil
         defer { isLoading = false }
 
         do {
             let products = try await Product.products(for: [SubscriptionProductIDs.proWeekly])
-            product = products.first
+            guard let loadedProduct = products.first else {
+                product = nil
+                productsLoadError = L10n.subscriptionErrorProductNotFound
+                return
+            }
+            product = loadedProduct
         } catch {
             product = nil
+            productsLoadError = error.localizedDescription
         }
     }
 

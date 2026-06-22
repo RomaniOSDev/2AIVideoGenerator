@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeView: View {
     @Bindable var appState: AppStateViewModel
     @State private var viewModel = HomeViewModel()
+    @State private var showAIConsentSheet = false
 
     private var recentVideos: [GeneratedVideo] {
         Array(appState.videos.prefix(6))
@@ -58,6 +59,18 @@ struct HomeView: View {
                 service: appState.waveSpeedService,
                 onComplete: { localURL in finishGeneration(localVideoURL: localURL) },
                 onCancel: { appState.isGenerating = false }
+            )
+        }
+        .sheet(isPresented: $showAIConsentSheet) {
+            AIProcessingConsentSheet(
+                onAllow: {
+                    AIProcessingConsentService.shared.grantConsent()
+                    showAIConsentSheet = false
+                    beginGeneration()
+                },
+                onCancel: {
+                    showAIConsentSheet = false
+                }
             )
         }
     }
@@ -240,6 +253,19 @@ struct HomeView: View {
             return
         }
 
+        if needsAIProcessingConsent {
+            showAIConsentSheet = true
+            return
+        }
+
+        beginGeneration()
+    }
+
+    private var needsAIProcessingConsent: Bool {
+        !AIProcessingConsentService.shared.hasUserConsent
+    }
+
+    private func beginGeneration() {
         hideKeyboard()
         appState.isGenerating = true
     }

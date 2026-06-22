@@ -2,7 +2,7 @@ import Foundation
 
 enum WaveSpeedConfiguration {
     static let baseURL = URL(string: "https://api.wavespeed.ai/api/v3")!
-    static let apiKey = "7ccf6b1f435db7e53d022eb21e947bd45062573393457ff5c47d8e3da310dcaf"
+    static let apiKey = "wsk_live_RfQQm5EOZGc7Tlxo0gBTbRrudB6-uOaoga9_GkcZrU4"
 
     static let pollIntervalSeconds: UInt64 = 2
     static let maxPollAttempts = 90
