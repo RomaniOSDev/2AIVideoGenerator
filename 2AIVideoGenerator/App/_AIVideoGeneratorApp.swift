@@ -21,7 +21,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate, AppsFlyerLibDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppsFlyerLib.shared().appsFlyerDevKey = "Xpot5ZNgdk6XZr8CFUqRER"
-        AppsFlyerLib.shared().appleAppID = "6766960665"
+        AppsFlyerLib.shared().appleAppID = "6780429231"
         AppsFlyerLib.shared().delegate = self  
         
         #if DEBUG

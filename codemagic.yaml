@@ -7,8 +7,8 @@ workflows:
         vars:
           XCODE_WORKSPACE: "2AIVideoGenerator.xcworkspace"
           XCODE_SCHEME: "2AIVideoGenerator"
-          BUNDLE_ID: "com.hei.rw98v1d30g3n3r3"
-          APP_STORE_APP_ID: 6766960665
+          BUNDLE_ID: "com.phg.r4hfj8kd9p7n"
+          APP_STORE_APP_ID: 6780429231
         xcode: latest
         cocoapods: 1.14.2
       scripts:
