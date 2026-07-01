@@ -116,6 +116,27 @@ enum L10n {
     static let paywallSubtitle = String(localized: "paywall.subtitle")
     static let paywallFreeTrialBadge = String(localized: "paywall.freeTrialBadge")
     static let paywallProSubscription = String(localized: "paywall.proSubscription")
+    static let paywallSubscriptionLengthWeekly = String(localized: "paywall.subscriptionLengthWeekly")
+    static let paywallSubscriptionLengthMonthly = String(localized: "paywall.subscriptionLengthMonthly")
+    static let paywallSubscriptionLengthYearly = String(localized: "paywall.subscriptionLengthYearly")
+    static let paywallServicesIncluded = String(localized: "paywall.servicesIncluded")
+    static func paywallBilledAmount(_ price: String, _ period: String) -> String {
+        String(format: String(localized: "paywall.billedAmount"), price, period)
+    }
+    static func paywallTrialFootnote(_ trialDuration: String, _ price: String, _ period: String) -> String {
+        String(format: String(localized: "paywall.trialFootnote"), trialDuration, price, period)
+    }
+    static func paywallSubscribeWithPrice(_ price: String, _ period: String) -> String {
+        String(format: String(localized: "paywall.subscribeWithPrice"), price, period)
+    }
+    static let paywallPeriodOneDay = String(localized: "paywall.periodOneDay")
+    static let paywallPeriodDays = String(localized: "paywall.periodDays")
+    static let paywallPeriodOneWeek = String(localized: "paywall.periodOneWeek")
+    static let paywallPeriodWeeks = String(localized: "paywall.periodWeeks")
+    static let paywallPeriodOneMonth = String(localized: "paywall.periodOneMonth")
+    static let paywallPeriodMonths = String(localized: "paywall.periodMonths")
+    static let paywallPeriodOneYear = String(localized: "paywall.periodOneYear")
+    static let paywallPeriodYears = String(localized: "paywall.periodYears")
     static let paywallStartTrial = String(localized: "paywall.startTrial")
     static let paywallSubscribe = String(localized: "paywall.subscribe")
     static let paywallTrialThenPrice = String(localized: "paywall.trialThenPrice")

@@ -16,6 +16,10 @@ final class SubscriptionService: SubscriptionServiceProtocol {
         product?.displayPrice
     }
 
+    var productDisplayName: String? {
+        product?.displayName
+    }
+
     var subscriptionPeriodLabel: String? {
         guard let period = product?.subscription?.subscriptionPeriod else { return nil }
         switch period.unit {
@@ -24,6 +28,21 @@ final class SubscriptionService: SubscriptionServiceProtocol {
         case .year: return L10n.subscriptionPerYear
         default: return nil
         }
+    }
+
+    var subscriptionLengthDescription: String? {
+        guard let period = product?.subscription?.subscriptionPeriod else { return nil }
+        switch period.unit {
+        case .week: return L10n.paywallSubscriptionLengthWeekly
+        case .month: return L10n.paywallSubscriptionLengthMonthly
+        case .year: return L10n.paywallSubscriptionLengthYearly
+        default: return nil
+        }
+    }
+
+    var introductoryOfferDurationLabel: String? {
+        guard let period = product?.subscription?.introductoryOffer?.period else { return nil }
+        return Self.formatSubscriptionPeriod(period)
     }
 
     var hasIntroductoryOffer: Bool {
@@ -163,6 +182,30 @@ final class SubscriptionService: SubscriptionServiceProtocol {
             return value
         case .unverified:
             throw SubscriptionError.verificationFailed
+        }
+    }
+
+    private static func formatSubscriptionPeriod(_ period: Product.SubscriptionPeriod) -> String {
+        let value = period.value
+        switch period.unit {
+        case .day:
+            return value == 1
+                ? L10n.paywallPeriodOneDay
+                : String(format: L10n.paywallPeriodDays, value)
+        case .week:
+            return value == 1
+                ? L10n.paywallPeriodOneWeek
+                : String(format: L10n.paywallPeriodWeeks, value)
+        case .month:
+            return value == 1
+                ? L10n.paywallPeriodOneMonth
+                : String(format: L10n.paywallPeriodMonths, value)
+        case .year:
+            return value == 1
+                ? L10n.paywallPeriodOneYear
+                : String(format: L10n.paywallPeriodYears, value)
+        @unknown default:
+            return "\(value)"
         }
     }
 }

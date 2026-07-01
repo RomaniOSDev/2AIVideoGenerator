@@ -3,23 +3,32 @@ import Foundation
 @MainActor
 @Observable
 final class SubscriptionViewModel {
-    func priceLabel(from service: SubscriptionService) -> String {
+    func productTitle(from service: SubscriptionService) -> String {
+        service.productDisplayName ?? L10n.paywallProSubscription
+    }
+
+    func billedAmountLabel(from service: SubscriptionService) -> String {
         guard let price = service.displayPrice, let period = service.subscriptionPeriodLabel else {
             return L10n.paywallPriceUnavailable
         }
+        return L10n.paywallBilledAmount(price, period)
+    }
 
-        if service.hasIntroductoryOffer {
-            return L10n.paywallTrialThenPriceDynamic(price, period)
+    func trialFootnote(from service: SubscriptionService) -> String? {
+        guard service.hasIntroductoryOffer,
+              let trialDuration = service.introductoryOfferDurationLabel,
+              let price = service.displayPrice,
+              let period = service.subscriptionPeriodLabel else {
+            return nil
         }
-
-        return L10n.paywallPriceDynamic(price, period)
+        return L10n.paywallTrialFootnote(trialDuration, price, period)
     }
 
     func purchaseButtonTitle(from service: SubscriptionService) -> String {
-        if service.hasIntroductoryOffer {
-            return L10n.paywallStartTrial
+        guard let price = service.displayPrice, let period = service.subscriptionPeriodLabel else {
+            return L10n.paywallSubscribe
         }
-        return L10n.paywallSubscribe
+        return L10n.paywallSubscribeWithPrice(price, period)
     }
 
     func features(from service: SubscriptionService) -> [String] {

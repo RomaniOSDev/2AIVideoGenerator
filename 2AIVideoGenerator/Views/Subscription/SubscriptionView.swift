@@ -15,22 +15,7 @@ struct SubscriptionView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                Spacer().frame(height: 16)
-
-                PaywallCarouselView()
-                    .padding(.bottom, 20)
-
-                Text(L10n.paywallTitle)
-                    .font(.title2.weight(.bold))
-                    .foregroundStyle(AppColors.textPrimary)
-                    .multilineTextAlignment(.center)
-
-                Text(L10n.paywallSubtitle)
-                    .font(.subheadline)
-                    .foregroundStyle(AppColors.textSecondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 6)
-                    .padding(.bottom, 20)
+                Spacer().frame(height: 12)
 
                 if appState.hasPremiumAccess {
                     statusBanner
@@ -41,9 +26,14 @@ struct SubscriptionView: View {
                 productSection
                     .padding(.horizontal, AppTheme.horizontalPadding)
 
-                bottomSection
-                    .padding(.horizontal, AppTheme.horizontalPadding)
-                    .padding(.top, 28)
+                if !appState.hasPremiumAccess {
+                    bottomSection
+                        .padding(.horizontal, AppTheme.horizontalPadding)
+                        .padding(.top, 20)
+                }
+
+                marketingSection
+                    .padding(.top, appState.hasPremiumAccess ? 20 : 28)
                     .padding(.bottom, 32)
             }
         }
@@ -57,6 +47,25 @@ struct SubscriptionView: View {
             Button(L10n.done, role: .cancel) {}
         } message: {
             Text(alertMessage ?? "")
+        }
+    }
+
+    private var marketingSection: some View {
+        VStack(spacing: 16) {
+            PaywallCarouselView()
+                .padding(.horizontal, AppTheme.horizontalPadding)
+
+            Text(L10n.paywallTitle)
+                .font(.title3.weight(.bold))
+                .foregroundStyle(AppColors.textPrimary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, AppTheme.horizontalPadding)
+
+            Text(L10n.paywallSubtitle)
+                .font(.footnote)
+                .foregroundStyle(AppColors.textSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, AppTheme.horizontalPadding)
         }
     }
 
@@ -153,35 +162,44 @@ struct SubscriptionView: View {
 
     private var subscriptionCard: some View {
         VStack(alignment: .leading, spacing: 16) {
-            ZStack(alignment: .topTrailing) {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text(L10n.paywallProSubscription)
-                        .font(.caption.weight(.bold))
-                        .tracking(1.2)
-                        .foregroundStyle(AppColors.paywallLavender)
+            VStack(alignment: .leading, spacing: 6) {
+                Text(viewModel.productTitle(from: subscriptionService))
+                    .font(.title3.weight(.bold))
+                    .foregroundStyle(AppColors.textPrimary)
 
-                    Text(viewModel.priceLabel(from: subscriptionService))
-                        .font(.subheadline.weight(.medium))
-                        .foregroundStyle(AppColors.textPrimary)
-
-                    VStack(alignment: .leading, spacing: 12) {
-                        ForEach(viewModel.features(from: subscriptionService), id: \.self) { feature in
-                            PaywallFeatureRow(text: feature)
-                        }
-                    }
-                    .padding(.top, 4)
+                if let length = subscriptionService.subscriptionLengthDescription {
+                    Text(length)
+                        .font(.subheadline)
+                        .foregroundStyle(AppColors.textSecondary)
                 }
+            }
 
-                if !appState.hasPremiumAccess, subscriptionService.hasIntroductoryOffer {
-                    Text(L10n.paywallFreeTrialBadge)
-                        .font(.caption2.weight(.bold))
-                        .tracking(0.5)
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(AppColors.paywallGreen)
-                        .clipShape(Capsule())
-                        .offset(x: 4, y: -4)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(viewModel.billedAmountLabel(from: subscriptionService))
+                    .font(.system(size: 34, weight: .bold, design: .rounded))
+                    .foregroundStyle(AppColors.textPrimary)
+                    .minimumScaleFactor(0.8)
+                    .lineLimit(1)
+
+                if let trialFootnote = viewModel.trialFootnote(from: subscriptionService) {
+                    Text(trialFootnote)
+                        .font(.caption)
+                        .foregroundStyle(AppColors.textSecondary.opacity(0.85))
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+
+            Divider()
+                .overlay(AppColors.border.opacity(0.35))
+
+            Text(L10n.paywallServicesIncluded)
+                .font(.caption.weight(.semibold))
+                .tracking(0.6)
+                .foregroundStyle(AppColors.paywallLavender)
+
+            VStack(alignment: .leading, spacing: 12) {
+                ForEach(viewModel.features(from: subscriptionService), id: \.self) { feature in
+                    PaywallFeatureRow(text: feature)
                 }
             }
         }
@@ -209,60 +227,65 @@ struct SubscriptionView: View {
     }
 
     private var bottomSection: some View {
-        VStack(spacing: 16) {
-            if !appState.hasPremiumAccess {
-                Button {
-                    Task { await performPurchase() }
-                } label: {
-                    Group {
-                        if subscriptionService.isPurchasing {
-                            ProgressView()
-                                .tint(.white)
-                        } else {
-                            Text(viewModel.purchaseButtonTitle(from: subscriptionService))
-                                .font(.headline.weight(.bold))
-                        }
+        VStack(spacing: 14) {
+            Button {
+                Task { await performPurchase() }
+            } label: {
+                Group {
+                    if subscriptionService.isPurchasing {
+                        ProgressView()
+                            .tint(.white)
+                    } else {
+                        Text(viewModel.purchaseButtonTitle(from: subscriptionService))
+                            .font(.headline.weight(.bold))
+                            .multilineTextAlignment(.center)
                     }
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 18)
-                    .background(
-                        LinearGradient(
-                            colors: [AppColors.accentBlue, AppColors.accentPurple],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-                    .clipShape(Capsule())
                 }
-                .buttonStyle(.plain)
-                .disabled(
-                    subscriptionService.isPurchasing
-                        || subscriptionService.isLoading
-                        || subscriptionService.product == nil
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+                .background(
+                    LinearGradient(
+                        colors: [AppColors.accentBlue, AppColors.accentPurple],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
                 )
-                .opacity(subscriptionService.product == nil ? 0.5 : 1)
+                .clipShape(Capsule())
             }
+            .buttonStyle(.plain)
+            .disabled(
+                subscriptionService.isPurchasing
+                    || subscriptionService.isLoading
+                    || subscriptionService.product == nil
+            )
+            .opacity(subscriptionService.product == nil ? 0.5 : 1)
+
+            legalLinksRow
 
             Text(L10n.paywallAutoRenewDisclaimer)
                 .font(.caption2)
                 .foregroundStyle(AppColors.textSecondary)
                 .multilineTextAlignment(.center)
+        }
+    }
 
-            HStack(spacing: 6) {
-                footerLink(L10n.paywallFooterTerms) {
-                    openURL(AppLegalLinks.termsOfUse)
-                }
-                Text("•")
-                    .foregroundStyle(AppColors.textSecondary.opacity(0.5))
-                footerLink(L10n.paywallFooterRestore) {
-                    Task { await performRestore() }
-                }
-                Text("•")
-                    .foregroundStyle(AppColors.textSecondary.opacity(0.5))
-                footerLink(L10n.paywallFooterPrivacy) {
-                    openURL(AppLegalLinks.privacyPolicy)
-                }
+    private var legalLinksRow: some View {
+        HStack(spacing: 0) {
+            legalLink(L10n.paywallFooterTerms) {
+                openURL(AppLegalLinks.termsOfUse)
+            }
+            Text("•")
+                .font(.footnote)
+                .foregroundStyle(AppColors.textSecondary.opacity(0.5))
+            legalLink(L10n.paywallFooterPrivacy) {
+                openURL(AppLegalLinks.privacyPolicy)
+            }
+            Text("•")
+                .font(.footnote)
+                .foregroundStyle(AppColors.textSecondary.opacity(0.5))
+            legalLink(L10n.paywallFooterRestore) {
+                Task { await performRestore() }
             }
         }
     }
@@ -290,13 +313,14 @@ struct SubscriptionView: View {
         showAlert = true
     }
 
-    private func footerLink(_ title: String, action: @escaping () -> Void) -> some View {
+    private func legalLink(_ title: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
-                .font(.caption2.weight(.medium))
-                .tracking(0.3)
-                .foregroundStyle(AppColors.textSecondary.opacity(0.7))
-                .textCase(.uppercase)
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(AppColors.paywallLavender)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 4)
         }
         .buttonStyle(.plain)
         .disabled(subscriptionService.isLoading)

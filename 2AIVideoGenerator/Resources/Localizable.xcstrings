@@ -1160,6 +1160,22 @@
         }
       }
     },
+    "paywall.billedAmount" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ / %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ / %2$@"
+          }
+        }
+      }
+    },
     "paywall.continueWithLimitations" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1385,6 +1401,54 @@
         }
       }
     },
+    "paywall.periodDays" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld-day" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "%lld дн." } }
+      }
+    },
+    "paywall.periodMonths" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld-month" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "%lld мес." } }
+      }
+    },
+    "paywall.periodOneDay" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "1-day" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "1 день" } }
+      }
+    },
+    "paywall.periodOneMonth" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "1-month" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "1 месяц" } }
+      }
+    },
+    "paywall.periodOneWeek" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "1-week" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "1 неделя" } }
+      }
+    },
+    "paywall.periodOneYear" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "1-year" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "1 год" } }
+      }
+    },
+    "paywall.periodWeeks" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld-week" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "%lld нед." } }
+      }
+    },
+    "paywall.periodYears" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld-year" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "%lld лет" } }
+      }
+    },
     "paywall.proSubscription" : {
       "localizations" : {
         "en" : {
@@ -1413,6 +1477,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Повторить загрузку"
+          }
+        }
+      }
+    },
+    "paywall.servicesIncluded" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Included with your subscription"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Входит в подписку"
           }
         }
       }
@@ -1449,6 +1529,50 @@
         }
       }
     },
+    "paywall.subscribeWithPrice" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subscribe — %1$@ / %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подписаться — %1$@ / %2$@"
+          }
+        }
+      }
+    },
+    "paywall.subscriptionLengthMonthly" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Monthly auto-renewable subscription" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Ежемесячная подписка с автопродлением" } }
+      }
+    },
+    "paywall.subscriptionLengthWeekly" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekly auto-renewable subscription"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Еженедельная подписка с автопродлением"
+          }
+        }
+      }
+    },
+    "paywall.subscriptionLengthYearly" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Yearly auto-renewable subscription" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Ежегодная подписка с автопродлением" } }
+      }
+    },
     "paywall.subtitle" : {
       "localizations" : {
         "en" : {
@@ -1477,6 +1601,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Творите без границ"
+          }
+        }
+      }
+    },
+    "paywall.trialFootnote" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Includes %1$@ free trial, then %2$@ / %3$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включает %1$@ бесплатно, затем %2$@ / %3$@"
           }
         }
       }

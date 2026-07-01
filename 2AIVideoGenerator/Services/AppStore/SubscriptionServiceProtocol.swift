@@ -10,7 +10,10 @@ protocol SubscriptionServiceProtocol: AnyObject {
     var productsLoadError: String? { get }
     var hasIntroductoryOffer: Bool { get }
     var displayPrice: String? { get }
+    var productDisplayName: String? { get }
     var subscriptionPeriodLabel: String? { get }
+    var subscriptionLengthDescription: String? { get }
+    var introductoryOfferDurationLabel: String? { get }
 
     var isSubscribed: Bool { get }
     var isInTrialPeriod: Bool { get }
